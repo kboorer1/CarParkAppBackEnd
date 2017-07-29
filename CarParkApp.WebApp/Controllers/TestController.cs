@@ -8,7 +8,7 @@ using System.Net.Http;
 using System.Web.Http; 
 namespace CarParkApp.WebApp.Controllers
 {
-    [RoutePrefix("api/v0/tests")]
+    [RoutePrefix("api/tests")]
     public class TestController : ApiController
     {
         private TestRepository testRepository;
@@ -18,20 +18,12 @@ namespace CarParkApp.WebApp.Controllers
             this.testRepository = new TestRepository();
         }
 
-        public Test[] Get()
-        {
-            return this.testRepository.GetAllTests(); 
-        }
-
         [HttpGet, Route("gettests")]
         public HttpResponseMessage GetAllTests()
         {
-            var resp = Request.CreateResponse(HttpStatusCode.OK, testRepository.GetAllTests()); 
-            return resp; 
+            var resp = Request.CreateResponse(HttpStatusCode.OK, testRepository.GetAllTests());
+            resp.Headers.Add("Access-Control-Allow-Origin", "*");
+            return resp;
         }
-
-
     }
-
-
 }
